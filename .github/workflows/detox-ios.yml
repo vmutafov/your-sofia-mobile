@@ -11,8 +11,6 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  # Must match devices.simulator.device.type in .detoxrc.js
-  IOS_SIMULATOR: 'iPhone 16'
   # Bump to invalidate the CocoaPods cache.
   PODS_CACHE_VERSION: v1
   EXPO_NO_TELEMETRY: '1'
