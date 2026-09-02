@@ -16,6 +16,12 @@ describe('Home screen', () => {
       console.warn('Getting started guide was probably already shown', e)
     }
 
+    try {
+      await element(by.text('Turn on')).tap()
+    } catch (e) {
+      console.warn('Location popup was probably already shown', e)
+    }
+
     await expect(element(by.text('Начало'))).toBeVisible()
   })
 })
