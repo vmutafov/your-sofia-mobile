@@ -113,7 +113,13 @@ jobs:
           force-avd-creation: false
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
           disable-animations: true
-          script: pnpm detox:android:test --record-videos all --record-logs all --take-screenshots failing --artifacts-location artifacts
+          script: |
+            # Runs here as well as in the snapshot step: the location test
+            # provider and the GPS fix are emulator runtime state that no
+            # snapshot restores, so seeding them only on an AVD cache miss
+            # would leave every cache-hit run without them.
+            bash .github/scripts/bootstrap-emulator.sh
+            pnpm detox:android:test --record-videos all --record-logs all --take-screenshots failing --artifacts-location artifacts
 
       - name: Upload Detox artifacts (recordings, logs, screenshots)
         if: always()

@@ -1,10 +1,17 @@
-#!/usr/bin/env bash
-set -euo pipefail
+adb root
 
 adb wait-for-device
-adb shell cmd location set-location-enabled true
-adb shell settings put secure location_mode 3 || true
-adb shell settings put secure location_providers_allowed +gps,+network || true
-adb shell settings put secure network_location_opt_in 1 || true
 
-echo "location_mode = $(adb shell settings get secure location_mode 2>/dev/null || echo unknown)"
+adb shell content insert \
+  --uri content://com.google.settings/partner \
+  --bind name:s:use_location_for_services \
+  --bind value:i:1
+
+adb shell settings put secure location_providers_allowed gps,network
+
+adb shell content insert \
+  --uri content://com.google.settings/partner \
+  --bind name:s:network_location_opt_in \
+  --bind value:i:1
+
+adb shell cmd location set-location-enabled true
