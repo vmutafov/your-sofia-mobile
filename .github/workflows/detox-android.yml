@@ -15,7 +15,7 @@ env:
   ANDROID_API_LEVEL: '36'
   ANDROID_TARGET: google_apis
   ANDROID_ARCH: x86_64
-  ANDROID_PROFILE: pixel_9_pro
+  ANDROID_PROFILE: Pixel_9_Pro_API_36
   AVD_NAME: Pixel_9_Pro_API_36
   # Bump to invalidate the cached AVD snapshot after changing emulator options.
   AVD_CACHE_VERSION: v1
