@@ -24,7 +24,9 @@
     "update:preview": "eas update --channel preview",
     "update:production": "eas update --channel production",
     "detox:android:build": "detox build --configuration android.emu.release",
-    "detox:android:test": "detox test --configuration android.emu.release"
+    "detox:android:test": "detox test --configuration android.emu.release",
+    "detox:ios:build": "detox build --configuration ios.sim.release",
+    "detox:ios:test": "detox test --configuration ios.sim.release"
   },
   "dependencies": {
     "@babel/runtime": "^7.28.4",

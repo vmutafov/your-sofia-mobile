@@ -6,7 +6,6 @@ on:
       - vmutafov/detox
   workflow_dispatch:
 
-# A superseded push should not keep an emulator busy.
 concurrency:
   group: detox-android-${{ github.ref }}
   cancel-in-progress: true
@@ -83,10 +82,10 @@ jobs:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          key: avd-${{ env.AVD_CACHE_VERSION }}-${{ env.ANDROID_API_LEVEL }}-${{ env.ANDROID_TARGET }}-${{ env.ANDROID_ARCH }}
+          key: avd-${{ env.AVD_CACHE_VERSION }}-${{ env.ANDROID_API_LEVEL }}-${{ env.ANDROID_TARGET }}-${{ env.ANDROID_ARCH }}-${{ hashFiles('.github/scripts/bootstrap-emulator.sh') }}
 
-      # On a cache miss, boot once and save a snapshot so subsequent runs start
-      # from it instead of doing a cold boot.
+      # On a cache miss, boot once, seed emulator state, and save a snapshot so
+      # subsequent runs start from it instead of doing a cold boot.
       - name: Create AVD and generate snapshot for caching
         if: steps.avd-cache.outputs.cache-hit != 'true'
         uses: reactivecircus/android-emulator-runner@v2
@@ -100,7 +99,7 @@ jobs:
           force-avd-creation: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
           disable-animations: false
-          script: echo "Generated AVD snapshot for caching."
+          script: bash .github/scripts/bootstrap-emulator.sh
 
       - name: Run Detox tests
         uses: reactivecircus/android-emulator-runner@v2
