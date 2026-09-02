@@ -9,7 +9,13 @@ describe('Home screen', () => {
     await device.reloadReactNative()
   })
 
-  it('shows a visible button', async () => {
-    await expect(element(by.text('Open Pokedex'))).toBeVisible()
+  it('app home screen loaded', async () => {
+    try {
+      await element(by.text('Напред')).tap()
+    } catch (e) {
+      console.warn('Getting started guide was probably already shown', e)
+    }
+
+    await expect(element(by.text('Начало'))).toBeVisible()
   })
 })
