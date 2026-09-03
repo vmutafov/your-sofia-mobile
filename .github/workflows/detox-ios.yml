@@ -72,7 +72,7 @@ jobs:
         run: pnpx detox clean-framework-cache && pnpx detox build-framework-cache
 
       - name: Run Detox tests
-        run: pnpm detox:ios:test --record-videos all --record-logs all --take-screenshots failing --artifacts-location artifacts
+        run: pnpm detox:ios:test --cleanup --record-videos failing --record-logs failing --take-screenshots failing --artifacts-location artifacts
 
       - name: Upload Detox artifacts (recordings, logs, screenshots)
         if: always()
