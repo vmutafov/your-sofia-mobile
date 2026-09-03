@@ -2,7 +2,7 @@ import {expect, by, device, element} from 'detox'
 
 describe('Home screen', () => {
   beforeAll(async () => {
-    await device.launchApp()
+    await device.launchApp({permissions: {notifications: 'YES', location: 'always'}})
   })
 
   beforeEach(async () => {
@@ -14,12 +14,6 @@ describe('Home screen', () => {
       await element(by.text('Напред')).tap()
     } catch (e) {
       console.warn('Getting started guide was probably already shown', e)
-    }
-
-    try {
-      await element(by.text('Turn on')).tap()
-    } catch (e) {
-      console.warn('Location popup was probably already shown', e)
     }
 
     await expect(element(by.text('Начало'))).toBeVisible()
